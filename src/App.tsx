@@ -40,6 +40,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Could not fetch calendar data:", error);
+        setCalendar(undefined);
         setLoadingState(LoadingStateTypes.ERROR);
       });
   }, []);
@@ -49,10 +50,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        {loadingState && <Spinner />}
+        {(loadingState === LoadingStateTypes.NOT_LOADING && calendar) && (
+          <p>boop</p>
+        )}
+        {loadingState === LoadingStateTypes.LOADING && <Spinner />}
       </header>
     </div>
   );

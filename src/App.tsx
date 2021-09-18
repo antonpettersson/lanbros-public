@@ -4,7 +4,7 @@ import "./App.css";
 
 import Loader from "react-loader-spinner";
 import { ICalendar, ICalendarItem } from "./types/calendar";
-import CalendarItem from "./CalendarItem";
+import CalendarItem from "./components/CalendarItem";
 
 enum LoadingStateTypes {
   LOADING = "LOADING",

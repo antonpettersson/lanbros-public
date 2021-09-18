@@ -1,5 +1,5 @@
 import React from "react";
-import { ICalendarItem } from "./types/calendar";
+import { ICalendarItem } from "../types/calendar";
 
 const CalendarItem = (props: ICalendarItem) => {
   const d = Date;

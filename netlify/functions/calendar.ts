@@ -7,6 +7,9 @@ const API_ENDPOINT =
   "events?key=";
 
 const handler: Handler = async (event, context) => {
+  const d = Date;
+  const now = new Date(d.now());
+
   try {
     const response = await fetch(API_ENDPOINT + process.env.VITE_API_KEY, {
       headers: {
@@ -14,13 +17,20 @@ const handler: Handler = async (event, context) => {
         Accept: "application/json",
       },
     });
-    const data = await response.json();
+    const items: any = await response.json().then((r: any) => {
+      return r.items.filter((item: any) => {
+        if (new Date(item.start.dateTime) > now) {
+          return item;
+        }
+      });
+    });
+
     return {
-        statusCode: 200,
-        body: JSON.stringify({
-          data,
-        }),
-      };
+      statusCode: 200,
+      body: JSON.stringify({
+        items,
+      }),
+    };
   } catch (err: any) {
     return {
       statusCode: err.statusCode || 500,

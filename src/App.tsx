@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import logo from "./assets/logo.png";
 import "./App.css";
 
 import Loader from "react-loader-spinner";
+import { ICalendar, ICalendarItem } from "./types/calendar";
+import CalendarItem from "./CalendarItem";
 
 enum LoadingStateTypes {
   LOADING = "LOADING",
@@ -10,32 +12,11 @@ enum LoadingStateTypes {
   ERROR = "ERROR",
 }
 
-interface Data {
-  data: ICalendar;
-}
-
-interface ICalendar {
-  items: ICalendarItem[];
-}
-
-interface ICalendarItem {
-  start: StartEndData;
-  end: StartEndData;
-  htmlLink: string;
-  summary: string;
-}
-
-interface StartEndData {
-  dateTime: string;
-}
-
 function App() {
   const [loadingState, setLoadingState] = useState<LoadingStateTypes>(
     LoadingStateTypes.NOT_LOADING
   );
   const [calendar, setCalendar] = useState<ICalendarItem[] | undefined>();
-  const d = Date;
-  const now = new Date(d.now());
 
   useEffect(() => {
     setLoadingState(LoadingStateTypes.LOADING);
@@ -51,8 +32,8 @@ function App() {
         }
         throw response;
       })
-      .then((data: Data) => {
-        setCalendar(data.data.items); // TODO: Slice items by three COMING events.
+      .then((data: ICalendar) => {
+        setCalendar(data.items);
         setLoadingState(LoadingStateTypes.NOT_LOADING);
       })
       .catch((error) => {
@@ -66,14 +47,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
+
         {loadingState === LoadingStateTypes.NOT_LOADING &&
           calendar &&
-          calendar.map((item) => {
+          calendar.map((item, index) => {
             return (
-              item &&
-              new Date(item.start.dateTime) > now && (
+              item && (
                 <CalendarItem
+                  key={index}
                   summary={item.summary}
                   start={item.start}
                   end={item.end}
@@ -90,20 +71,6 @@ function App() {
 
 const Spinner = () => {
   return <Loader type="Oval" color="#00BFFF" height={30} />;
-};
-
-const CalendarItem = (props: ICalendarItem) => {
-  const d = Date;
-  const startDate = new d(props.start.dateTime).toLocaleString();
-  const endDate = new d(props.end.dateTime).toLocaleString();
-
-  return (
-    <div>
-      <p>{props.summary}</p>
-      <p>{startDate}</p>
-      <p>{endDate}</p>
-    </div>
-  );
 };
 
 export default App;

@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 35vmin;
   pointer-events: none;
 }
 
@@ -21,6 +21,6 @@
   color: #61dafb;
 }
 
-button {
-  font-size: calc(10px + 2vmin);
+a {
+  color: white;
 }

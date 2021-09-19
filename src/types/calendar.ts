@@ -6,6 +6,7 @@ export interface ICalendarItem {
   start: StartEndData;
   end: StartEndData;
   htmlLink: string;
+  description: string;
   summary: string;
 }
 

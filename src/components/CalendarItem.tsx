@@ -24,7 +24,7 @@ const CalendarItem = (props: ICalendarItem) => {
     <div style={{ display: "flex" }}>
       <div style={{ padding: "0.5em", backgroundColor: "#f59219" }}>
         <div style={{ fontSize: "0.7em", fontWeight: 500 }}>
-          {month + 1}/{day}
+          {day}/{month + 1}
         </div>
         <div style={{ fontSize: "0.35em", fontWeight: 500 }}>
           {startHour}:{padLeadingZero(startMinute)}-{endHour}:

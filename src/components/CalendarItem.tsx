@@ -4,9 +4,6 @@ import { ICalendarItem } from "../types/calendar";
 const CalendarItem = (props: ICalendarItem) => {
   const d = Date;
 
-  const today = new Date().getDate();
-  const todayMonth = new Date().getMonth() + 1;
-
   const startDate = new d(props.start.dateTime).toLocaleString();
   const month = new d(startDate).getMonth();
   const day = new d(startDate).getDate();

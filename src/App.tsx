@@ -6,13 +6,14 @@ import Loader from "react-loader-spinner";
 import { ICalendar, ICalendarItem } from "./types/calendar";
 import CalendarItem from "./components/CalendarItem";
 import Button from "./components/Button/Button";
+import Card from "./components/Card/Card";
 
 enum LoadingStateTypes {
   LOADING = "LOADING",
   NOT_LOADING = "NOT_LOADING",
   ERROR = "ERROR",
 }
-
+// #f59219
 function App() {
   const [loadingState, setLoadingState] = useState<LoadingStateTypes>(
     LoadingStateTypes.NOT_LOADING
@@ -52,49 +53,43 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-menu"></div>
+      <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <div>
           <p style={{ fontSize: "1.1rem", marginBottom: "2em" }}>
             Vi spelar spel. Tillsammans.
           </p>
         </div>
-        <div>
+        <div style={{marginBottom: '1.5em'}}>
           <Button label={"discord"} action={routeToDiscord} />
           <Button label={"merch"} action={routeToShop} />
         </div>
+
         {loadingState === LoadingStateTypes.NOT_LOADING &&
           calendar &&
           calendar.map((item, index) => {
             return (
-              <div style={{ paddingTop: "1em" }}>
-                <div>
-                  <p
-                    style={{
-                      fontSize: "1.1rem",
-                      marginBottom: "0em",
-                    }}
-                  >
-                    <a href="https://calendar.google.com/calendar/embed?src=askcfmm90aj0dee5tu64ngp068%40group.calendar.google.com&ctz=Europe%2FStockholm">
-                      Spelkvällskalender
-                    </a>
-                  </p>
-                </div>
+              <div style={{ paddingTop: "0.5em" }}>
                 {item && (
-                  <CalendarItem
-                    key={index}
-                    summary={item.summary}
-                    start={item.start}
-                    end={item.end}
-                    htmlLink={item.htmlLink}
-                    description={item.description}
+                  <Card
+                    component={
+                      <CalendarItem
+                        key={index}
+                        summary={item.summary}
+                        start={item.start}
+                        end={item.end}
+                        htmlLink={item.htmlLink}
+                        description={item.description}
+                      />
+                    }
                   />
                 )}
               </div>
             );
           })}
         {loadingState === LoadingStateTypes.LOADING && <Spinner />}
-      </header>
+      </div>
     </div>
   );
 }

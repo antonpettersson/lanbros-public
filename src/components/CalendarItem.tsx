@@ -4,14 +4,15 @@ import { ICalendarItem } from "../types/calendar";
 const CalendarItem = (props: ICalendarItem) => {
   const d = Date;
 
-  const startDate = new d(props.start.dateTime).toLocaleString();
-  const month = new d(startDate).getMonth();
-  const day = new d(startDate).getDate();
+  const startDate = new d(props.start.dateTime);
+  const month = startDate.getMonth();
+  const day = startDate.getDate();
+  const startHour = startDate.getHours();
+  const startMinute = startDate.getMinutes();
 
-  const startHour = new d(props.start.dateTime).getHours();
-  const startMinute = new d(props.start.dateTime).getMinutes();
-  const endHour = new d(props.end.dateTime).getHours();
-  const endMinute = new d(props.end.dateTime).getMinutes();
+  const endDate = new d(props.end.dateTime);
+  const endHour = endDate.getHours();
+  const endMinute = endDate.getMinutes();
 
   const padLeadingZero = (num: number) => {
     if (num > 9) {
